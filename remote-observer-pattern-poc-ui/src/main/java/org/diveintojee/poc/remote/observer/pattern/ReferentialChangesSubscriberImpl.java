@@ -68,8 +68,6 @@ public class ReferentialChangesSubscriberImpl implements
 					(ReferentialChangesMessage) ((ObjectMessage) message)
 							.getObject());
 
-			System.out.println("----------------------------- "
-					+ getLastMessage());
 			rootWindowController.updateStatusBarText(getLastMessage());
 
 		} catch (JMSException e) {

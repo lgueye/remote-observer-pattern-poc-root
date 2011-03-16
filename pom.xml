@@ -326,6 +326,13 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
+				<groupId>org.apache.xbean</groupId>
+				<artifactId>xbean-spring</artifactId>
+				<version>3.7</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<dependency>
 				<groupId>org.apache.activemq</groupId>
 				<artifactId>activemq-spring</artifactId>
 				<version>${activemq.version}</version>
@@ -341,10 +348,6 @@
 					<exclusion>
 						<groupId>junit</groupId>
 						<artifactId>junit</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.apache.xbean</groupId>
-						<artifactId>xbean-spring</artifactId>
 					</exclusion>
 					<exclusion>
 						<groupId>org.jencks</groupId>
@@ -444,8 +447,8 @@
 		<targetJdk>${project.build.java.compiler.source}</targetJdk>
 		<activemq.version>5.4.2</activemq.version>
 		<javax.jms.version>1.1</javax.jms.version>
-		
-		<activemq.broker.url>tcp://localhost:61600</activemq.broker.url>
+
+		<activemq.broker.url>tcp://0.0.0.0:61600</activemq.broker.url>
 		<activemq.referential.changes.topic>referential.changes.topic</activemq.referential.changes.topic>
 	</properties>
 </project>

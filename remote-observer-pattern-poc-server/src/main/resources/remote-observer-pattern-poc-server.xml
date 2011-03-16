@@ -64,4 +64,21 @@
 		<property name="defaultDestinationName" value="${activemq.referential.changes.topic}" />
 	</bean>
 
+  <amq:broker useJmx="true">
+
+    <amq:networkConnectors>
+    </amq:networkConnectors>
+
+    <amq:persistenceFactory>
+      <amq:amqPersistenceAdapterFactory dataDirectory="${basedir}/target" />
+    </amq:persistenceFactory>
+
+    <amq:transportConnectors>
+      <amq:transportConnector uri="${activemq.broker.url}" />
+    </amq:transportConnectors>
+
+  </amq:broker>
+
+
+
 </beans>
