@@ -6,7 +6,13 @@ The project consists of one maven root project and 4 modules : *core, *server, *
 *server-test : tests webservices and remote notifications
 *ui : triggers changes and observes changes notifications
 
-To run the example
+To build the example
+ - cd *root, mvn clean install
+
+To run integration tests
+ - cd *root, mvn clean install -Pserver-tests
+
+To visually run the example
  - run webapp : cd *server, mvn clean install jetty:run-exploded
  - run ui : cd *ui, mvn clean install exec:java -Dexec.mainClass="org.diveintojee.poc.remote.observer.pattern.ApplicationLauncher"
  - launch entity creation menu
