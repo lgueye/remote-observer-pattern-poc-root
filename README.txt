@@ -7,11 +7,11 @@ The project consists of one maven root project and 4 modules : *core, *server, *
 *ui : triggers changes and observes changes notifications
 
 To run the example
- - run activemq
  - run webapp : cd *server, mvn clean install jetty:run-exploded
  - run ui : cd *ui, mvn clean install mvn exec:java -Dexec.mainClass="org.diveintojee.poc.remote.observer.pattern.ApplicationLauncher"
  - launch entity creation menu
  - create entity
- - note the message on the status bar : it should display the entity just created
+ - note the message on the status bar : it should display the entity just created, the status bar should change color
+
 
 
