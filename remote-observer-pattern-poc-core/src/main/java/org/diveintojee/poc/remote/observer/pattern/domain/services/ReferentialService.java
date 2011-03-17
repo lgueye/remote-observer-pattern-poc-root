@@ -8,7 +8,6 @@ import java.util.List;
 import javax.jws.WebService;
 
 import org.diveintojee.poc.remote.observer.pattern.domain.Entity;
-import org.diveintojee.poc.remote.observer.pattern.domain.ProductType;
 
 /**
  * @author louis.gueye@gmail.com
@@ -24,7 +23,5 @@ public interface ReferentialService {
 	Long addEntity(Entity entity);
 
 	List<Entity> loadAllEntities();
-
-	List<ProductType> loadAllProductTypes();
 
 }

@@ -3,7 +3,6 @@
  */
 package org.diveintojee.poc.remote.observer.pattern;
 
-import java.text.SimpleDateFormat;
 
 /**
  * @author louis.gueye@gmail.com
@@ -18,10 +17,5 @@ public class Constants {
 	public static final String ROOT_WINDOW_INITIAL_HEIGHT_KEY = "root.window.initial.height";
 
 	public static final String MESSAGE_SOURCE_BEAN_ID = "ui-message-source";
-
-	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
-			"yyyy-MM-dd");
-
-	public static final int AMOUNTS_SCALE = 2;
 
 }

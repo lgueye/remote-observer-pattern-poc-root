@@ -3,17 +3,7 @@
  */
 package org.diveintojee.poc.remote.observer.pattern.persistence;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Set;
-
-import org.diveintojee.poc.remote.observer.pattern.domain.Deal;
-import org.diveintojee.poc.remote.observer.pattern.domain.Product;
+import org.diveintojee.poc.remote.observer.pattern.domain.Entity;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +22,7 @@ public class PersistenceManagerImplTest {
 	 */
 	@Test
 	public final void findAllWillReturnNullWithEmptyEntityMap() {
-		Assert.assertNull(persistenceManager.findAll(Product.class));
+		Assert.assertNull(persistenceManager.findAll(Entity.class));
 	}
 
 	/**
@@ -45,76 +35,6 @@ public class PersistenceManagerImplTest {
 		Assert.assertNull(persistenceManager.findAll(null));
 	}
 
-	@Test
-	public void generateDealsWillGenerateDatesInExpectedInterval() {
-		// Given
-		int countDeals = 2;
-		int dateIntervalInDays = 3;
-		int maxAmount = 100;
-
-		// When
-		Set<Deal> results = persistenceManager.generateDeals(countDeals,
-				dateIntervalInDays, maxAmount);
-
-		// Then
-		Calendar endDateCalendar = Calendar.getInstance();
-		endDateCalendar.add(Calendar.DAY_OF_MONTH, dateIntervalInDays);
-		Date endDate = endDateCalendar.getTime();
-		long max = endDate.getTime();
-
-		Calendar beginDateCalendar = Calendar.getInstance();
-		beginDateCalendar.add(Calendar.DAY_OF_MONTH, -dateIntervalInDays);
-		Date beginDate = beginDateCalendar.getTime();
-		long min = beginDate.getTime();
-
-		assertNotNull(results);
-
-		for (Deal deal : results) {
-			assertNotNull(deal);
-			Date asOfDate = deal.getAsOfDate();
-			assertNotNull(asOfDate);
-			assertTrue(asOfDate.getTime() <= max);
-			assertTrue(asOfDate.getTime() >= min);
-		}
-
-	}
-
-	@Test
-	public void generateDealsWillGenerateExpectedAmount() {
-		// Given
-		int countDeals = 2;
-		int dateIntervalInDays = 3;
-		int maxAmount = 100;
-
-		// When
-		Set<Deal> results = persistenceManager.generateDeals(countDeals,
-				dateIntervalInDays, maxAmount);
-
-		// Then
-
-		assertNotNull(results);
-
-		for (Deal deal : results) {
-			assertNotNull(deal);
-			BigDecimal amount = deal.getAmount();
-			assertNotNull(amount);
-			assertTrue(amount.longValue() <= maxAmount);
-		}
-
-	}
-
-	@Test
-	public void generateDealsWillGenerateExpectedCountDeals() {
-		int countDeals = 2;
-		int dateIntervalInDays = 2;
-		int maxAmount = 100;
-		Set<Deal> results = persistenceManager.generateDeals(countDeals,
-				dateIntervalInDays, maxAmount);
-		assertNotNull(results);
-		assertEquals(results.size(), countDeals);
-
-	}
-
 	/**
 	 * Test method for
 	 * {@link org.diveintojee.poc.rest.persistence.PersistenceManagerImpl#get(java.lang.Class, java.lang.Long)}
@@ -122,7 +42,7 @@ public class PersistenceManagerImplTest {
 	 */
 	@Test
 	public final void getWillReturnNullWithNotFoundEntityMap() {
-		Assert.assertNull(persistenceManager.get(Product.class, Long.valueOf(5)));
+		Assert.assertNull(persistenceManager.get(Entity.class, Long.valueOf(5)));
 	}
 
 	/**
@@ -142,7 +62,7 @@ public class PersistenceManagerImplTest {
 	 */
 	@Test
 	public final void getWillReturnNullWithNullId() {
-		Assert.assertNull(persistenceManager.get(Product.class, null));
+		Assert.assertNull(persistenceManager.get(Entity.class, null));
 	}
 
 	/**

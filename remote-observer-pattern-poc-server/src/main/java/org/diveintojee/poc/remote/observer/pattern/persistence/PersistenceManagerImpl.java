@@ -3,27 +3,17 @@
  */
 package org.diveintojee.poc.remote.observer.pattern.persistence;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Currency;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.collections.MapUtils;
-import org.diveintojee.poc.remote.observer.pattern.domain.Deal;
 import org.diveintojee.poc.remote.observer.pattern.domain.Entity;
 import org.diveintojee.poc.remote.observer.pattern.domain.PersistableEntity;
-import org.diveintojee.poc.remote.observer.pattern.domain.Product;
-import org.diveintojee.poc.remote.observer.pattern.domain.ProductType;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,21 +22,11 @@ import org.springframework.stereotype.Component;
 @Component(PersistenceManager.BEAN_ID)
 public class PersistenceManagerImpl implements PersistenceManager {
 
-	private static String[] CURRENCY_CODES = null;
+	private final Map<Class<?>, Map<Long, Object>> repository = new HashMap<Class<?>, Map<Long, Object>>();
 
 	public static Entity[] ENTITIES = null;
 
-	private static Product[] PRODUCTS = null;
-
-	public static ProductType[] PRODUCT_TYPES = null;
-
-	private static Random rnd = new Random();
-
 	static {
-		PersistenceManagerImpl.CURRENCY_CODES = new String[] {
-				Currency.getInstance(Locale.FRANCE).getCurrencyCode(),
-				Currency.getInstance(Locale.UK).getCurrencyCode(),
-				Currency.getInstance(Locale.US).getCurrencyCode() };
 
 		Entity paris = new Entity();
 		paris.setId(0L);
@@ -77,61 +57,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		PersistenceManagerImpl.ENTITIES = new Entity[] { paris, london,
 				newYork, hkg, tokyo };
 
-		ProductType pt0 = new ProductType();
-		pt0.setId(Long.valueOf(PersistenceManagerImpl.rnd.nextInt(1000)));
-		pt0.setLabel("Bonds");
-
-		ProductType pt1 = new ProductType();
-		pt1.setId(Long.valueOf(PersistenceManagerImpl.rnd.nextInt(1000)));
-		pt1.setLabel("Swap");
-
-		ProductType pt2 = new ProductType();
-		pt2.setId(Long.valueOf(PersistenceManagerImpl.rnd.nextInt(1000)));
-		pt2.setLabel("Options");
-
-		ProductType pt3 = new ProductType();
-		pt3.setId(Long.valueOf(PersistenceManagerImpl.rnd.nextInt(1000)));
-		pt3.setLabel("Futures");
-
-		PersistenceManagerImpl.PRODUCT_TYPES = new ProductType[] { pt0, pt1,
-				pt2, pt3 };
-
-		Product p0 = new Product();
-		p0.setId(Long.valueOf(PersistenceManagerImpl.rnd.nextInt(1000)));
-
-		p0.setType(PersistenceManagerImpl.PRODUCT_TYPES[PersistenceManagerImpl.rnd
-				.nextInt(PersistenceManagerImpl.PRODUCT_TYPES.length)]);
-		p0.setIsin("FR0000000001");
-
-		Product p1 = new Product();
-		p1.setId(Long.valueOf(PersistenceManagerImpl.rnd.nextInt(1000)));
-		p1.setType(PersistenceManagerImpl.PRODUCT_TYPES[PersistenceManagerImpl.rnd
-				.nextInt(PersistenceManagerImpl.PRODUCT_TYPES.length)]);
-		p1.setIsin("FR0000000002");
-
-		Product p2 = new Product();
-		p2.setId(Long.valueOf(PersistenceManagerImpl.rnd.nextInt(1000)));
-		p2.setType(PersistenceManagerImpl.PRODUCT_TYPES[PersistenceManagerImpl.rnd
-				.nextInt(PersistenceManagerImpl.PRODUCT_TYPES.length)]);
-		p2.setIsin("US0000000001");
-
-		Product p3 = new Product();
-		p3.setId(Long.valueOf(PersistenceManagerImpl.rnd.nextInt(1000)));
-		p3.setType(PersistenceManagerImpl.PRODUCT_TYPES[PersistenceManagerImpl.rnd
-				.nextInt(PersistenceManagerImpl.PRODUCT_TYPES.length)]);
-		p3.setIsin("US0000000002");
-
-		Product p4 = new Product();
-		p4.setId(Long.valueOf(PersistenceManagerImpl.rnd.nextInt(1000)));
-		p4.setType(PersistenceManagerImpl.PRODUCT_TYPES[PersistenceManagerImpl.rnd
-				.nextInt(PersistenceManagerImpl.PRODUCT_TYPES.length)]);
-		p4.setIsin("US0000000003");
-
-		PersistenceManagerImpl.PRODUCTS = new Product[] { p0, p1, p2, p3, p4 };
-
 	}
-
-	private final Map<Class<?>, Map<Long, Object>> repository = new HashMap<Class<?>, Map<Long, Object>>();
 
 	/**
 	 * @see org.diveintojee.poc.rest.persistence.PersistenceManager#clear(java.lang.Class)
@@ -184,53 +110,6 @@ public class PersistenceManagerImpl implements PersistenceManager {
 			return null;
 
 		return new ArrayList(entities.values());
-
-	}
-
-	/**
-	 * @see org.diveintojee.poc.remote.observer.pattern.persistence.PersistenceManager#generateDeals(int,
-	 *      int, int)
-	 */
-	@Override
-	public Set<Deal> generateDeals(final int countDeals,
-			final int dateIntervalInDays, final int maxAmount) {
-
-		Set<Deal> deals = new HashSet<Deal>();
-
-		Calendar endDateCalendar = Calendar.getInstance();
-		endDateCalendar.add(Calendar.DAY_OF_MONTH, dateIntervalInDays);
-		Date endDate = endDateCalendar.getTime();
-		long max = endDate.getTime();
-
-		Calendar beginDateCalendar = Calendar.getInstance();
-		beginDateCalendar.add(Calendar.DAY_OF_MONTH, -dateIntervalInDays);
-		Date beginDate = beginDateCalendar.getTime();
-		long min = beginDate.getTime();
-
-		for (int i = 0; i < countDeals; i++) {
-
-			Deal deal = new Deal();
-
-			Long id = Long.valueOf(i);
-			deal.setId(id);
-
-			deal.setAsOfDate(new Date(Math.round((Math.random() * (max - min))
-					+ min)));
-
-			deal.setEntity(PersistenceManagerImpl.ENTITIES[PersistenceManagerImpl.rnd
-					.nextInt(PersistenceManagerImpl.ENTITIES.length)]);
-			deal.setProduct(PersistenceManagerImpl.PRODUCTS[PersistenceManagerImpl.rnd
-					.nextInt(PersistenceManagerImpl.PRODUCTS.length)]);
-			deal.setCurrencyCode(PersistenceManagerImpl.CURRENCY_CODES[PersistenceManagerImpl.rnd
-					.nextInt(PersistenceManagerImpl.CURRENCY_CODES.length)]);
-			deal.setAmount(BigDecimal.valueOf(PersistenceManagerImpl.rnd
-					.nextInt(maxAmount)));
-
-			deals.add(deal);
-
-		}
-
-		return deals;
 
 	}
 

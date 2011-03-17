@@ -14,10 +14,6 @@ public class MenuBar extends JMenuBar {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JMenu dealsMenu = null;
-
-	private JMenuItem findDealsByCriteriaMenuItem = null;
-
 	private JMenu referentialMenu = null;
 
 	private JMenu entityMenu = null;
@@ -46,20 +42,6 @@ public class MenuBar extends JMenuBar {
 	}
 
 	/**
-	 * This method initializes dealsMenu
-	 * 
-	 * @return javax.swing.JMenu
-	 */
-	private JMenu getDealsMenu() {
-		if (dealsMenu == null) {
-			dealsMenu = new JMenu("Deals");
-			dealsMenu.setMnemonic(KeyEvent.VK_D);
-			dealsMenu.add(getFindDealsByCriteriaMenuItem());
-		}
-		return dealsMenu;
-	}
-
-	/**
 	 * This method initializes entityMenu
 	 * 
 	 * @return javax.swing.JMenu
@@ -70,19 +52,6 @@ public class MenuBar extends JMenuBar {
 			entityMenu.add(getCreateEntityMenuItem());
 		}
 		return entityMenu;
-	}
-
-	/**
-	 * This method initializes indicatorsMenuItem
-	 * 
-	 * @return javax.swing.JMenuItem
-	 */
-	public JMenuItem getFindDealsByCriteriaMenuItem() {
-		if (findDealsByCriteriaMenuItem == null) {
-			findDealsByCriteriaMenuItem = new JMenuItem("Find by criteria");
-			findDealsByCriteriaMenuItem.setMnemonic(KeyEvent.VK_F);
-		}
-		return findDealsByCriteriaMenuItem;
 	}
 
 	/**
@@ -104,8 +73,6 @@ public class MenuBar extends JMenuBar {
 	 */
 	private void initialize() {
 		this.setSize(new Dimension(153, 21));
-
-		this.add(getDealsMenu());
 		this.add(getReferentialMenu());
 	}
 

@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.Random;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -16,7 +17,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
 
 import org.diveintojee.poc.remote.observer.pattern.Constants;
-import org.diveintojee.poc.remote.observer.pattern.deals.FindDealsByCriteriaController;
 import org.diveintojee.poc.remote.observer.pattern.domain.services.ReferentialChangesMessage;
 import org.diveintojee.poc.remote.observer.pattern.entity.CreateEntityController;
 import org.diveintojee.poc.remote.observer.pattern.root.window.view.MenuBar;
@@ -44,23 +44,29 @@ public class RootWindowController implements ActionListener {
 	MessageSource messageSource;
 
 	@Autowired
-	@Qualifier(FindDealsByCriteriaController.BEAN_ID)
-	private FindDealsByCriteriaController findDealsByCriteriaController;
-
-	@Autowired
 	@Qualifier(CreateEntityController.BEAN_ID)
 	private CreateEntityController createEntityController;
+
+	private static Random colorsRandom;
+
+	private static Color[] COLORS;
+
+	static {
+
+		colorsRandom = new Random();
+
+		COLORS = new Color[] { Color.BLUE, Color.CYAN, Color.DARK_GRAY,
+				Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.YELLOW,
+				Color.PINK };
+	}
 
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override
 	public void actionPerformed(final ActionEvent e) {
+
 		if (e.getSource().equals(
-				((MenuBar) getView().getJMenuBar())
-						.getFindDealsByCriteriaMenuItem()))
-			onDealsMenuItemClick();
-		else if (e.getSource().equals(
 				((MenuBar) getView().getJMenuBar()).getCreateEntityMenuItem()))
 			onCreateEntityMenuItemClick();
 
@@ -79,9 +85,6 @@ public class RootWindowController implements ActionListener {
 	}
 
 	protected void addListeners() {
-
-		((MenuBar) getView().getJMenuBar()).getFindDealsByCriteriaMenuItem()
-				.addActionListener(this);
 
 		((MenuBar) getView().getJMenuBar()).getCreateEntityMenuItem()
 				.addActionListener(this);
@@ -147,15 +150,6 @@ public class RootWindowController implements ActionListener {
 		showInternalFrame(frame);
 	}
 
-	protected void onDealsMenuItemClick() {
-		findDealsByCriteriaController.initialize();
-		JInternalFrame frame = findDealsByCriteriaController.getView();
-		findDealsByCriteriaController.showView(true);
-
-		addInternalFrame(frame);
-		showInternalFrame(frame);
-	}
-
 	public void setView(final Object view) {
 		this.view = (RootWindow) view;
 	}
@@ -181,12 +175,20 @@ public class RootWindowController implements ActionListener {
 
 	}
 
+	/**
+	 * Business method that occurs on referential change message<br/>
+	 * 
+	 * @param lastMessage
+	 */
 	public void updateStatusBarText(final ReferentialChangesMessage lastMessage) {
-		getView().getStatusBarLabel().setBackground(Color.ORANGE);
+
+		getView().getStatusBar().setBackground(
+				RootWindowController.COLORS[RootWindowController.colorsRandom
+						.nextInt(RootWindowController.COLORS.length)]);
 		getView().getStatusBarLabel().setFont(
 				new Font("Tahoma", Font.BOLD | Font.BOLD, 12));
 		getView().getStatusBarLabel().setText(lastMessage.toString());
-		getView().getStatusBarLabel().revalidate();
+		getView().getStatusBar().revalidate();
 	}
 
 }

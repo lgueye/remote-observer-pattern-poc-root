@@ -9,7 +9,6 @@ import java.util.List;
 import javax.jws.WebService;
 
 import org.diveintojee.poc.remote.observer.pattern.domain.Entity;
-import org.diveintojee.poc.remote.observer.pattern.domain.ProductType;
 import org.diveintojee.poc.remote.observer.pattern.domain.services.ReferentialChangesPublisher;
 import org.diveintojee.poc.remote.observer.pattern.domain.services.ReferentialService;
 import org.diveintojee.poc.remote.observer.pattern.persistence.PersistenceManager;
@@ -53,13 +52,6 @@ public class ReferentialServiceImpl implements ReferentialService {
 	public List<Entity> loadAllEntities() {
 
 		return Arrays.asList(PersistenceManagerImpl.ENTITIES);
-
-	}
-
-	@Override
-	public List<ProductType> loadAllProductTypes() {
-
-		return Arrays.asList(PersistenceManagerImpl.PRODUCT_TYPES);
 
 	}
 

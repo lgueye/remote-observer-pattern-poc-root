@@ -42,7 +42,7 @@ public class RootWindow extends JFrame {
 		return this.jContentPane;
 	}
 
-	private JPanel getStatusBar() {
+	public JPanel getStatusBar() {
 		if (this.statusBar == null)
 			this.statusBar = new JPanel();
 		this.statusBar

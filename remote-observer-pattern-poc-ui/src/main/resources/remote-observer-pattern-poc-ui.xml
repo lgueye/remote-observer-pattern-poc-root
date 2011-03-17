@@ -15,9 +15,6 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 	<jaxws:client id="referentialService" serviceClass="org.diveintojee.poc.remote.observer.pattern.domain.services.ReferentialService"
 		address="${remote-observer-pattern-poc-server.referential.service.url}" />
 		
-	<jaxws:client id="dealService" serviceClass="org.diveintojee.poc.remote.observer.pattern.domain.services.DealService"
-		address="${remote-observer-pattern-poc-server.deal.service.url}" />
-
 	<bean id="ui-message-source" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
