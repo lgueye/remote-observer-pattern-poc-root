@@ -9,6 +9,7 @@ import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
 import org.diveintojee.poc.remote.observer.pattern.domain.Entity;
+import org.diveintojee.poc.remote.observer.pattern.domain.PersistableEntity;
 import org.diveintojee.poc.remote.observer.pattern.domain.services.DataModificationOperation;
 import org.diveintojee.poc.remote.observer.pattern.domain.services.ReferentialChangesMessage;
 import org.diveintojee.poc.remote.observer.pattern.domain.services.ReferentialChangesPublisher;
@@ -34,8 +35,7 @@ public class ReferentialChangesPublisherImpl implements
 	@Override
 	public void addEntity(final Entity entity) {
 
-		final ReferentialChangesMessage message = new ReferentialChangesMessage(
-				DataModificationOperation.CREATE, entity.getId(), Entity.class);
+		final ReferentialChangesMessage message = buildCreateMessage(entity);
 
 		jmsTemplate.send(new MessageCreator() {
 
@@ -51,6 +51,16 @@ public class ReferentialChangesPublisherImpl implements
 
 		});
 
+	}
+
+	/**
+	 * @param persistable
+	 * @return
+	 */
+	protected ReferentialChangesMessage buildCreateMessage(
+			final PersistableEntity persistable) {
+		return new ReferentialChangesMessage(DataModificationOperation.CREATE,
+				persistable.getId(), persistable.getClass());
 	}
 
 }
