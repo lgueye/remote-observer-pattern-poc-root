@@ -6,15 +6,55 @@
 	<packaging>pom</packaging>
 	<version>0.1-SNAPSHOT</version>
 	<name>${project.artifactId}</name>
+    <url></url>
 	<modules>
 		<module>remote-observer-pattern-poc-core</module>
 		<module>remote-observer-pattern-poc-server</module>
 		<module>remote-observer-pattern-poc-server-test</module>
 		<module>remote-observer-pattern-poc-ui</module>
 	</modules>
+    <ciManagement>
+       <system>Jenkins</system>
+       <url>http://localhost:8080/</url>
+       <notifiers>
+          <notifier>
+             <type>mail</type>
+             <address>louis.gueye@gmail.com</address>
+          </notifier>
+       </notifiers>
+    </ciManagement>
+    <developers>
+       <developer>
+          <id>lgueye</id>
+          <name>Louis Gueye</name>
+          <email>louis.gueye@gmail.com</email>
+          <roles>
+             <role>developer</role>
+          </roles>
+          <organization>diveintojee.org</organization>
+          <timezone>+1</timezone>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/lgueye/remote-observer-pattern-poc-root.git</connection>
+        <developerConnection>scm:git:git://github.com/lgueye/remote-observer-pattern-poc-root.git</developerConnection>
+        <url>https://github.com/lgueye/remote-observer-pattern-poc-root</url>
+    </scm>
+    <distributionManagement>
+        <site>
+           <id>localhost</id>
+           <url>scp://localhost/www/maven/sites/</url>
+        </site>
+    </distributionManagement>
+
 	<build>
 		<pluginManagement>
 			<plugins>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-project-info-reports-plugin</artifactId>
+                  <version>2.3.1</version>
+                </plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -57,6 +97,11 @@
 								<groupId>org.apache.maven.plugins</groupId>
 								<artifactId>maven-pmd-plugin</artifactId>
 							</plugin>
+                            <plugin>
+                              <groupId>org.apache.maven.plugins</groupId>
+                              <artifactId>maven-project-info-reports-plugin</artifactId>
+                            </plugin>
+
 						</reportPlugins>
 					</configuration>
 				</plugin>
@@ -117,7 +162,6 @@
 					<artifactId>maven-pmd-plugin</artifactId>
 					<version>${maven-pmd-plugin.version}</version>
 					<configuration>
-						<linkXref>true</linkXref>
 						<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
 						<minimumTokens>100</minimumTokens>
 					</configuration>
@@ -152,6 +196,12 @@
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
 			</plugin>
+
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+
 		</plugins>
 	</build>
 
@@ -259,11 +309,6 @@
 						<artifactId>commons-logging</artifactId>
 					</exclusion>
 				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-rt-databinding-aegis</artifactId>
-				<version>${cxf.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.cxf</groupId>
